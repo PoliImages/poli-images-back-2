@@ -3,6 +3,7 @@ const { GoogleGenAI } = require('@google/genai'); //SKD do gemini
 const jwt = require('jsonwebtoken');
 const dontenv = require('dotenv');
 const cors = require('cors');
+const { default: ImageGenerator } = require('./gen_image');
 
 dontenv.config();
 
@@ -85,6 +86,24 @@ app.post('/api/generate-image', authenticateToken, async (req, res) => {
     } catch (e) {
         console.error('Erro ao chamar a API Gemini:', e);
         res.status(500).json({ error: 'Falha ao gerar a imagem através da API Gemini.' });
+    }
+});
+
+// {
+//     prompt: "A beautiful sunset over the mountains",
+//     style: "Realistic"
+// }
+
+app.post("/generate-image", async (req, res) => {
+    const { prompt, style } = req.body;
+
+    try {
+        const imageGen = new ImageGenerator(env.GEMINI_API_KEY);
+        const imageUrl = await imageGen.generateImage(prompt, style);
+        res.json({ imageUrl });
+    } catch (error) {
+        console.error("Erro ao gerar imagem:", error);
+        res.status(500).json({ error: "Erro ao gerar imagem" });
     }
 });
 

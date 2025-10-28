@@ -1,0 +1,26 @@
+{
+  "name": "poli-images-back-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoliImages/poli-images-back-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PoliImages/poli-images-back-2/issues"
+  },
+  "homepage": "https://github.com/PoliImages/poli-images-back-2#readme",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.27.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

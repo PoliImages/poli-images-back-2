@@ -11,32 +11,49 @@ class ImageGenerator {
     async generateImage(prompt: string, style: string): Promise<string> {
         const response = await this.client.models.generateContent({
             model: "gemini-2.5-flash-image",
-            contents: `Generate an image of ${prompt} in the style of ${style}.`,
-        })
+            contents: prompt,
+      });
+      console.log(response)
+        // const model = this.client.getGenerativeModel({ model: 'gemini-2.0-flash-preview-image-generation'});
 
-        if (!response.candidates || response.candidates.length === 0) {
-            throw new Error("No images were generated.");
-        }
+        // const prompt = "Write a story about a magic backpack."
 
-        if (!response.candidates[0].content || !response.candidates[0].content.parts) {
-            throw new Error("No image content found.");
-        }
+        // const result = await model.ge
+        // const response = result.response;
+        // const text = response.text();
+        // console.log(text); 
+        // console.log(await this.client.models.list());
+        // const model = this.client.models.get({model: "models/gemini-2.5-pro"});
+        // const response = await this.client.models.generateImages({
 
-        for (const part of response.candidates[0].content.parts) {
-            if (part.text) {
-            console.log(part.text);
-            } else if (part.inlineData) {
-            const imageData = part.inlineData.data;
+        //     model: "models/gemini-2.5-pro",
+        //     prompt: `Generate an image of ${prompt} in the style of ${style}.`,
+           
+        // })
+        // console.log("Image generation response:", response);
+        // if (!response.generatedImages || response.generatedImages.length === 0) {
+        //     throw new Error("No images were generated.");
+        // }
 
-            if (!imageData) {
-                throw new Error("No image data found.");
-            }
+        // if (!response.generatedImages[0]|| !response.generatedImages[0]) {
+        //     throw new Error("No image content found.");
+        // }
 
-            const buffer = Buffer.from(imageData, "base64");
-            fs.writeFileSync("gemini-native-image.png", buffer);
-            console.log("Image saved as gemini-native-image.png");
-            }
-        }
+        // // for (const part of response.generatedImages) {
+        // //     if (part) {
+        // //     console.log(part.text);
+        // //     } else if (part.inlineData) {
+        // //     const imageData = part.inlineData.data;
+
+        // //     if (!imageData) {
+        // //         throw new Error("No image data found.");
+        // //     }
+
+        // //     const buffer = Buffer.from(imageData, "base64");
+        // //     fs.writeFileSync("gemini-native-image.png", buffer);
+        // //     console.log("Image saved as gemini-native-image.png");
+        // //     }
+        // // }
 
         return await fs.promises.readFile("mage.gemini-native-ipng", { encoding: "base64" });
     };

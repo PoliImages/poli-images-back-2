@@ -43,7 +43,7 @@ function authenticateToken(req, res, next) {
 
 // --- Rota Principal para Geração de Imagem ---
 // Usa o middleware de autenticação
-app.post("/api/generate-image", authenticateToken, async (req, res) => {
+app.post("/api/generate-image", async (req, res) => {
     // 🚨 AQUI ESTÁ A CHAVE: Espera 'prompt' E 'style' separados do front-end
     const { prompt, style } = req.body; 
 
@@ -56,6 +56,7 @@ app.post("/api/generate-image", authenticateToken, async (req, res) => {
 
     // A chave da API deve vir das variáveis de ambiente
     const geminiApiKey = process.env.GEMINI_API_KEY;
+    console.log("Usando GEMINI_API_KEY:", geminiApiKey);
     if (!geminiApiKey) {
         console.error('GEMINI_API_KEY não está definida nas variáveis de ambiente.');
         return res.status(500).json({ error: 'Erro de configuração da API.' });
@@ -65,7 +66,7 @@ app.post("/api/generate-image", authenticateToken, async (req, res) => {
         const imageGen = new ImageGenerator(geminiApiKey);
         
         // Assume que a função do gen_image.ts é chamada com o prompt final
-        const imageUrl = await imageGen.generate(finalPrompt); 
+        const imageUrl = await imageGen.generateImage(finalPrompt); 
 
         res.json({ imageUrl: imageUrl });
     } catch (error) {

@@ -8,7 +8,7 @@ const { default: ImageGenerator } = require('./gen_image');
 dontenv.config();
 
 const app = express();
-const PORT = process.envPORT || 3000; //rever a questão da porta!!!!!
+const PORT = process.env.PORT
 const JWT_SECRET = process.env.JWT_SECRET;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY}); // inicializa o cliente gemini com a chave

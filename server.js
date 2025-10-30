@@ -1,4 +1,4 @@
-const express = requier('express');
+const express = require('express');
 const { GoogleGenAI } = require('@google/genai'); //SKD do gemini
 const jwt = require('jsonwebtoken');
 const dontenv = require('dotenv');

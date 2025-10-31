@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import fs from "fs";
+// import * as fs from "fs";
 
 class ImageGenerator {
     private client: GoogleGenAI;
@@ -24,21 +24,24 @@ class ImageGenerator {
 
         for (const part of response.candidates[0].content.parts) {
             if (part.text) {
-            console.log(part.text);
+                console.log(part.text);
             } else if (part.inlineData) {
-            const imageData = part.inlineData.data;
+                const imageData = part.inlineData.data;
 
-            if (!imageData) {
-                throw new Error("No image data found.");
-            }
+                if (!imageData) {
+                    throw new Error("No image data found.");
+                }
 
-            const buffer = Buffer.from(imageData, "base64");
-            fs.writeFileSync("gemini-native-image.png", buffer);
-            console.log("Image saved as gemini-native-image.png");
+                return imageData;
+
+            // const buffer = Buffer.from(imageData, "base64");
+            // fs.writeFileSync("gemini-native-image.png", buffer);
+            // console.log("Image saved as gemini-native-image.png");
             }
         }
 
-        return await fs.promises.readFile("mage.gemini-native-ipng", { encoding: "base64" });
+        // return await fs.promises.readFile("mage.gemini-native-ipng", { encoding: "base64" });
+        throw new Error("No image data part was found in the response.");
     };
 }
 

@@ -1,9 +1,10 @@
-const express = requier('express');
+const express = require('express');
 const { GoogleGenAI } = require('@google/genai'); //SKD do gemini
 const jwt = require('jsonwebtoken');
 const dontenv = require('dotenv');
 const cors = require('cors');
 const { default: ImageGenerator } = require('./gen_image');
+// const ImageGenerator = require('./gen_image').default;
 
 dontenv.config();
 
@@ -11,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT
 const JWT_SECRET = process.env.JWT_SECRET;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY}); // inicializa o cliente gemini com a chave
+// const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY}); // inicializa o cliente gemini com a chave
 
 app.use(express.json());
 app.use(cors()); //acesso do frontend
@@ -98,7 +99,7 @@ app.post("/generate-image", async (req, res) => {
     const { prompt, style } = req.body;
 
     try {
-        const imageGen = new ImageGenerator(env.GEMINI_API_KEY);
+        const imageGen = new ImageGenerator(GEMINI_API_KEY);
         const imageUrl = await imageGen.generateImage(prompt, style);
         res.json({ imageUrl });
     } catch (error) {

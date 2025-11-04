@@ -19,6 +19,7 @@ app.post("/api/generate-image", async (req, res) => {
 
   try {
     const imageBase64 = await generateImage(prompt);
+    console.log(imageBase64);
     res.json({ image: imageBase64 });
   } catch (err) {
     console.error(err);

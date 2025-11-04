@@ -1,32 +1,42 @@
+// gen_image.js
 import { GoogleGenAI } from "@google/genai";
-import * as fs from "node:fs";
 
-async function generateImage() {
-
+// A função agora recebe o prompt e o style
+async function generateImage(userPrompt, style) { 
+  
+  if (!userPrompt) {
+    throw new Error("O prompt do usuário é obrigatório.");
+  }
+  
   const ai = new GoogleGenAI({});
 
-  // TODO: trocar o prompt fixo para o prompt recebido por parâmetro
-  const prompt =
-    "Create a picture of a nano banana dish in a fancy restaurant with a Gemini theme";
+  // Combina o prompt do usuário com o estilo
+  const prompt = `Gere uma imagem de: "${userPrompt}", no estilo artístico: ${style}. Por favor, crie uma imagem vibrante e didática, adequada para contexto escolar.`;
+  
+  console.log(`Prompt final enviado para a IA: ${prompt}`);
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash-image", // talvez trocar para outro modelocaso esse falhe
-    contents: prompt,
-  });
-  for (const part of response.candidates[0].content.parts) {
-    if (part.text) {
-      console.log(part.text);
-    } else if (part.inlineData) {
-      const imageData = part.inlineData.data;
-      const buffer = Buffer.from(imageData, "base64");
-      fs.writeFileSync("gemini-native-image.png", buffer);
-      const base64 = buffer.toString("base64");
-      console.log("Image saved as gemini-native-image.png"); // TODO: mudar para retornar o base64 da imagem, não salvar localmente
-      return base64;
+  try {
+    const response = await ai.models.generateContent({
+      // Use o modelo apropriado para geração de imagem, se necessário
+      model: "gemini-2.5-flash-image",
+      contents: prompt,
+    });
+    
+    for (const part of response.candidates[0].content.parts) {
+      if (part.inlineData) {
+        const imageData = part.inlineData.data;
+        console.log("Imagem gerada com sucesso. Retornando Base64.");
+        // Retorna a string Base64
+        return imageData; 
+      }
     }
-  }
+    
+    throw new Error("A resposta da IA não contém dados de imagem Base64.");
 
-  console.log("Image generation completed.");
+  } catch (error) {
+    console.error("Erro na geração da imagem:", error.message);
+    throw new Error("Falha ao se comunicar com o serviço de IA para geração da imagem.");
+  }
 }
 
 export default generateImage;

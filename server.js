@@ -1,9 +1,9 @@
-const express = requier('express');
+const express = require('express');
 const { GoogleGenAI } = require('@google/genai'); //SKD do gemini
 const jwt = require('jsonwebtoken');
 const dontenv = require('dotenv');
 const cors = require('cors');
-const { default: ImageGenerator } = require('./gen_image');
+// const { default: ImageGenerator } = require('./gen_image');
 
 dontenv.config();
 

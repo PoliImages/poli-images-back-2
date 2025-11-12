@@ -1,8 +1,18 @@
+const express = require('express');
+const { GoogleGenAI } = require('@google/genai'); //SKD do gemini
+const jwt = require('jsonwebtoken');
+const dontenv = require('dotenv');
+const cors = require('cors');
+// const { default: ImageGenerator } = require('./gen_image');
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const dotenv = require("dotenv");
 dotenv.config();
 
 import generateImage  from "./gen_image.js";

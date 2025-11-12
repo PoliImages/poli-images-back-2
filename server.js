@@ -3,10 +3,6 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// const express = require("express");
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
-// const dotenv = require("dotenv");
 dotenv.config();
 
 import generateImage  from "./gen_image.js";

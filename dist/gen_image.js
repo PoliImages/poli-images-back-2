@@ -9,11 +9,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new genai_1.GoogleGenerativeAI(apiKey);
-// Modelo correto de imagem
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
 });
-// Função principal
 async function generateImage(prompt) {
     try {
         const response = await model.generateContent([
@@ -21,12 +19,10 @@ async function generateImage(prompt) {
                 text: `Gere uma imagem baseada nesse prompt: ${prompt}`,
             },
         ]);
-        // ✅ (A mudança está aqui!)
         const buffer = response.response.image;
         if (!buffer) {
             throw new Error("Nenhuma imagem retornada pela API");
         }
-        // Convertendo para base64
         const base64 = buffer.toString("base64");
         return `data:image/png;base64,${base64}`;
     }

@@ -26,7 +26,6 @@ describe('Funcionalidade: API de Geração de Imagem (BDD)', () => {
         mockGenerate.mockClear();
     });
     
-    // Cenário 1
     it.skip('Cenário: Usuário solicita uma imagem com dados válidos', async () => {
 
         const requestBody = {
@@ -55,7 +54,6 @@ describe('Funcionalidade: API de Geração de Imagem (BDD)', () => {
         expect(mockGenerate).toHaveBeenCalledWith(requestBody.prompt, requestBody.style);
     });
 
-    // Cenário 2
     it.skip('Cenário: Usuário solicita uma imagem sem um prompt', async () => {
         const requestBody = {
             style: "Realista"
@@ -74,7 +72,6 @@ describe('Funcionalidade: API de Geração de Imagem (BDD)', () => {
         expect(mockGenerate).not.toHaveBeenCalled();
     });
 
-    // Cenário 3
     it('Cenário: Usuário solicita uma imagem com prompt vazio', async () => {
         const requestBody = {
             prompt: "",
